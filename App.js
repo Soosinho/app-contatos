@@ -44,13 +44,11 @@ export default function App() {
       <View style = {styles.contatoView}>
         <View style = {styles.contatoInput}>
         <TextInput
-          style = {styles.nomeInput}
           placeholder = {'Nome'}
           onChangeText = {capturarNome}
           value = {contato.nome}
         />
         <TextInput
-          style = {styles.telefoneInput}
           placeholder = {'Telefone'}
           onChangeText = {capturarTelefone}
           value = {contato.telefone}
@@ -101,10 +99,10 @@ const styles = StyleSheet.create({
   },
   itemNaLista: {
     padding: 12,
-    backgroundColor: '#CCC',
-    borderColor: '#000',
+    backgroundColor: '#ffff4433',
+    borderColor: '#000000',
     borderWidth: 1,
     marginBottom: 8,
-    borderRadius: 8,
+    borderRadius: 3,
   },
 });
