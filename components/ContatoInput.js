@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { View, StyleSheet, TextInput, Button } from 'react-native'
+import Cores from '../cores/cores'
 
 const ContatoInput = (props) => {
     const [contato, setContato] = useState({ nome: "", telefone: "" })
@@ -48,7 +49,7 @@ const ContatoInput = (props) => {
           flexDirection: 'row',
           justifyContent: 'space-between',
           alignItems: 'center',
-          borderColor: '#00000022',
+          borderColor: Cores.borderTwo,
           borderWidth: 1,
           padding: 15,
           marginBottom: 20,

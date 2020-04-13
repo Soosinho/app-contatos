@@ -1,29 +1,37 @@
 import React from 'react'
 import { View, StyleSheet, Text, TouchableOpacity } from 'react-native'
+import Cartao from './Cartao'
 
 const ContatoItem = (props) => {
     return (
         <TouchableOpacity onLongPress={props.onDelete.bind(this, props.chave)}>
-            <View style={styles.itemNaLista}>
-                <View>
-                    <Text> {props.nome} </Text>
+            <Cartao>
+                <View style={styles.itemNaLista}>
+                    <View style={styles.nome}>
+                        <Text style={{fontWeight: 'bold'}}>Nome: </Text>
+                        <Text> {props.nome} </Text>
+                    </View>
+                    <View style={styles.telefone}>
+                        <Text style={{fontWeight: 'bold'}}>Telefone: </Text>
+                        <Text> {props.telefone} </Text>
+                    </View>
                 </View>
-                <View>
-                    <Text> {props.telefone} </Text>
-                </View>
-            </View>
+            </Cartao>
         </TouchableOpacity>
+
     )
 }
 
 const styles = StyleSheet.create({
+    nome: {
+        flexDirection: 'row',
+    },
+    telefone: {
+        flexDirection: 'row',
+    },
     itemNaLista: {
-        padding: 12,
-        backgroundColor: '#ffff4433',
-        borderColor: '#00000077',
-        borderWidth: 1,
-        marginBottom: 8,
-        borderRadius: 20,
+        width: 300,
+        maxWidth: '80%',
     },
 });
 
