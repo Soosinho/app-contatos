@@ -1,58 +1,51 @@
 import React, { useState } from 'react';
 import { StyleSheet, Text, View, FlatList } from 'react-native';
-import ContatoInput from './components/ContatoInput'
-import ContatoItem from './components/ContatoItem'
+import TelaPrincipal from './telas/TelaPrincipalApp'
+import EditarContato from './telas/EditarContato';
 
 export default function App() {
-  const [contatos, setContatos] = useState([])
+  const [contatoParaEditar, setContatoParaEditar] = useState({ nome: "", telefone: "" })
+  const [vetorContatos, setVetorContatos] = useState([])
+  const [contador, setContador] = useState(0)
 
-  const [contadorContatos, setContadorContatos] = useState(0)
+  const [clicouContato, setClicouContato] = useState(false)
 
-  const adicionarContato = (contato) => {
-    setContatos((contatos) => {
-      console.log(contato)
-
-      setContadorContatos(contadorContatos + 1)
-
-      return [...contatos, { key: contadorContatos.toString(), nome: contato.nome, telefone: contato.telefone }]
-    })
-    console.log(contatos)
+  const editarContato = (contato, contatos, contador) => {
+    setClicouContato(true)
+    setContatoParaEditar(contato)
+    setVetorContatos(contatos)
+    setContador(contador)
   }
 
-  const removerContato = (keyRemovida) => {
-    setContatos(contatos => {
-      return contatos.filter((contato) => {
-        return contato.key !== keyRemovida
-      })
-    })
+  const voltar = (vetorEditado) => {
+    setClicouContato(false)
+    setVetorContatos(vetorEditado)
+  }
+
+  let conteudo = 
+  <TelaPrincipal 
+    contatos={vetorContatos}
+    onContato={editarContato} 
+    contador={contador}
+  />
+
+  if (clicouContato == true) {
+    conteudo = <EditarContato
+      contato={contatoParaEditar}
+      contatos={vetorContatos}
+      onVoltar={voltar}
+    />
   }
 
   return (
-    <View style={styles.telaPrincipal}>
-      <ContatoInput
-        onAdicionarContato = {adicionarContato}
-      />
-
-      <FlatList
-        data={contatos}
-        renderItem={
-          contato => (
-            <ContatoItem
-              chave = {contato.item.key}
-              nome = {contato.item.nome}
-              telefone = {contato.item.telefone}
-              onDelete = {removerContato}
-            />
-          )
-        }
-      />
+    <View style={styles.tela}>
+      {conteudo}
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  telaPrincipal: {
-    padding: 50,
+  tela: {
 
   },
 });
