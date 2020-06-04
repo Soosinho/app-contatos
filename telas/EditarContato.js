@@ -7,6 +7,7 @@ import TextInputView from '../components/TextInputView'
 const EditarContato = (props) => {
     const [clicouEditar, setClicouEditar] = useState(false)
     const [vetorEditado, setVetorEditado] = useState(props.contatos)
+    const [contato, setContato] = useState(props.contato)
 
     const edit = () => {
         setClicouEditar(true)
@@ -21,8 +22,7 @@ const EditarContato = (props) => {
     if (clicouEditar == true) {
         editar =
             <TextInputView
-                nome={props.contato.item.nome}
-                telefone={props.contato.item.telefone}
+                contato={contato}
             />
     }
     return (
@@ -30,17 +30,11 @@ const EditarContato = (props) => {
             <Cartao>
                 <View style={styles.editView}>
                     {editar}
-                    <View style={{width: '32%', justifyContent: 'center'}}>
-                        <Button
-                            title="Editar"
-                            onPress={edit}
-                        />
-                    </View>
                 </View>
                 <View styles={styles.buttonView}>
                     <Button
-                        title="Aplicar alterações"
-                        onPress={aplicarAlteracoes.bind(this, props.contato.item.key)}
+                        title="Editar"
+                        onPress={edit}
                     />
                     <Button
                         title="Voltar"
