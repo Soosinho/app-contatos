@@ -1,15 +1,25 @@
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
+import { useDispatch } from 'react-redux';
 
-import Cores from '../cores/cores'
-import Cartao from '../components/Cartao'
-import ContatoInput from '../components/ContatoInput'
+import * as contatosActions from '../store/contatosActions';
+import Cores from '../cores/cores';
+import Cartao from '../components/Cartao';
+import ContatoInput from '../components/ContatoInput';
 
-export default function AddContato({ route }) {
+
+export default function AddContato({ navigation }) {
+    const dispatch = useDispatch();
+
+    const adicionarcontato = (contato) => {
+        dispatch(contatosActions.addContato(contato));
+        navigation.goBack();
+    }
+
     return (
         <View style={styles.telaCadastroView}>
             <Cartao style={styles.contatoInput}>
-                <ContatoInput onAdicionarContato={route.params.adicionarContato} />
+                <ContatoInput onSalvarContato={adicionarcontato} />
             </Cartao>
         </View>
     );

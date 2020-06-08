@@ -1,10 +1,14 @@
 import React, { useState } from 'react';
 import { StyleSheet, TextInput, View, Button } from 'react-native';
 
+import TirarFoto from './tirarFoto';
+import Contato from '../model/Contato';
+
 const ContatoInput = (props) => {
-    const contatoKey = props.contatoAtual ? props.contatoAtual.item.key : '';
-    const [contatoNome, setContatoNome] = useState(props.contatoAtual ? props.contatoAtual.item.value.contatoNome : '');
-    const [contatoTelefone, setContatoTelefone] = useState(props.contatoAtual ? props.contatoAtual.item.value.contatoTelefone : '');
+    const contatoKey = props.contatoAtual ? props.contatoAtual.key : '';
+    const [contatoNome, setContatoNome] = useState(props.contatoAtual ? props.contatoAtual.nome : '');
+    const [contatoTelefone, setContatoTelefone] = useState(props.contatoAtual ? props.contatoAtual.telefone : '');
+    const [contatoImagem, setContatoImagem] = useState(props.contatoAtual ? props.contatoAtual.imagem : '');
 
     const capturarContatoNome = (nome) => {
         setContatoNome(nome)
@@ -14,59 +18,51 @@ const ContatoInput = (props) => {
         setContatoTelefone(telefone)
     };
 
-    let botaoAcao;
-    if (props.onAdicionarContato)
-        botaoAcao = <Button
-            title="Adicionar"
-            onPress={() => props.onAdicionarContato(contatoNome, contatoTelefone)}
-        />
-    else if (props.onAtualizarContato)
-        botaoAcao = <Button
-            title="Atualizar"
-            onPress={() => props.onAtualizarContato({ value: { contatoNome, contatoTelefone }, key: contatoKey })}
-        />
+    const capturarContatoImagem = (imagem) => {
+        setContatoImagem(imagem)
+    };
 
     return (
         <View style={styles.contatoView}>
-            <View style={styles.contatoInput}>
-                <TextInput
-                    placeholder="Nome"
-                    style={styles.contatoInputText}
-                    onChangeText={capturarContatoNome}
-                    value={contatoNome}
-                />
+            <TextInput
+                placeholder="Nome"
+                style={styles.contatoInputText}
+                onChangeText={capturarContatoNome}
+                value={contatoNome}
+            />
 
-                <TextInput
-                    placeholder="Telefone"
-                    style={styles.contatoInputText}
-                    onChangeText={capturarContatoTelefone}
-                    value={contatoTelefone}
-                    keyboardType={"phone-pad"}
-                />
-            </View>
-            {botaoAcao}
+            <TextInput
+                placeholder="Telefone"
+                style={styles.contatoInputText}
+                onChangeText={capturarContatoTelefone}
+                value={contatoTelefone}
+                keyboardType={"phone-pad"}
+            />
+
+            <TirarFoto fotoAtual={contatoImagem} onFotoTirada={capturarContatoImagem} />
+
+            <Button
+                title="Salvar Contato"
+                onPress={() => props.onSalvarContato(new Contato((contatoKey ? contatoKey : new Date().toString()), contatoNome, contatoTelefone, contatoImagem))}
+            />
         </View>
     );
 }
 
 const styles = StyleSheet.create({
     contatoView: {
-        flexDirection: 'row',
-        justifyContent: 'center',
-        alignItems: 'center',
-        padding: 20
-    },
-    contatoInput: {
+        flexDirection: 'column',
+        justifyContent: 'space-between'
     },
     contatoInputText: {
         alignSelf: 'center',
-        width: 100,
+        maxWidth: '50%',
+        minWidth: '50%',
         borderBottomColor: 'black',
         borderBottomWidth: 1,
         padding: 2,
-        marginBottom: 8,
-        marginRight: 30,
+        marginBottom: 8
     }
 });
 
-export default ContatoInput
+export default ContatoInput;

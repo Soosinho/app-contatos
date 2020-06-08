@@ -22,4 +22,4 @@ const styles = StyleSheet.create({
     }
 });
 
-export default Cartao
+export default Cartao;

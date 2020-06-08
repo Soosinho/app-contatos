@@ -5,7 +5,7 @@ import { Platform } from 'react-native'
 
 import Cores from '../cores/cores'
 
-const BotaoCabecalho = (props) => {
+export default BotaoCabecalho = (props) => {
     return (
         <HeaderButton
             {...props}
@@ -15,5 +15,3 @@ const BotaoCabecalho = (props) => {
         />
     );
 };
-
-export default BotaoCabecalho
