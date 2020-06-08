@@ -1,66 +1,72 @@
-import React, { useState } from 'react'
-import { View, StyleSheet, TextInput, Button } from 'react-native'
-import Cores from '../cores/cores'
+import React, { useState } from 'react';
+import { StyleSheet, TextInput, View, Button } from 'react-native';
 
 const ContatoInput = (props) => {
-    const [contato, setContato] = useState({ nome: "", telefone: "" })
+    const contatoKey = props.contatoAtual ? props.contatoAtual.item.key : '';
+    const [contatoNome, setContatoNome] = useState(props.contatoAtual ? props.contatoAtual.item.value.contatoNome : '');
+    const [contatoTelefone, setContatoTelefone] = useState(props.contatoAtual ? props.contatoAtual.item.value.contatoTelefone : '');
 
-    const capturarNome = (nome) => {
-        let nomeContato = nome
-        let telefoneContato = contato.telefone
-        setContato({
-            nome: nomeContato,
-            telefone: telefoneContato,
-        })
-    }
+    const capturarContatoNome = (nome) => {
+        setContatoNome(nome)
+    };
 
-    const capturarTelefone = (telefone) => {
-        let nomeContato = contato.nome
-        let telefoneContato = telefone
-        setContato({
-            nome: nomeContato,
-            telefone: telefoneContato,
-        })
-    }
+    const capturarContatoTelefone = (telefone) => {
+        setContatoTelefone(telefone)
+    };
+
+    let botaoAcao;
+    if (props.onAdicionarContato)
+        botaoAcao = <Button
+            title="Adicionar"
+            onPress={() => props.onAdicionarContato(contatoNome, contatoTelefone)}
+        />
+    else if (props.onAtualizarContato)
+        botaoAcao = <Button
+            title="Atualizar"
+            onPress={() => props.onAtualizarContato({ value: { contatoNome, contatoTelefone }, key: contatoKey })}
+        />
 
     return (
         <View style={styles.contatoView}>
             <View style={styles.contatoInput}>
                 <TextInput
-                    placeholder={'Nome'}
-                    onChangeText={capturarNome}
-                    value={contato.nome}
+                    placeholder="Nome"
+                    style={styles.contatoInputText}
+                    onChangeText={capturarContatoNome}
+                    value={contatoNome}
                 />
+
                 <TextInput
-                    placeholder={'Telefone'}
-                    onChangeText={capturarTelefone}
-                    value={contato.telefone}
+                    placeholder="Telefone"
+                    style={styles.contatoInputText}
+                    onChangeText={capturarContatoTelefone}
+                    value={contatoTelefone}
+                    keyboardType={"phone-pad"}
                 />
             </View>
-            <Button
-                title="+"
-                onPress={() => props.onAdicionarContato(contato)}
-            />
+            {botaoAcao}
         </View>
-    )
+    );
 }
-    const styles = StyleSheet.create({
-        contatoView: {
-          flexDirection: 'row',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-          borderColor: Cores.borderTwo,
-          borderWidth: 1,
-          padding: 15,
-          marginBottom: 20,
-        },
-        contatoInput: {
-          width: '80%',
-          flexDirection: 'column',
-          paddingRight: 2,
-          paddingLeft: 2,
-        },
+
+const styles = StyleSheet.create({
+    contatoView: {
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center',
+        padding: 20
+    },
+    contatoInput: {
+    },
+    contatoInputText: {
+        alignSelf: 'center',
+        width: 100,
+        borderBottomColor: 'black',
+        borderBottomWidth: 1,
+        padding: 2,
+        marginBottom: 8,
+        marginRight: 30,
     }
-)
+});
 
 export default ContatoInput

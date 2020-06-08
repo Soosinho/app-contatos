@@ -1,63 +1,27 @@
-import React, { useState } from 'react'
-import { View, Text, Button, TextInput, StyleSheet } from 'react-native'
-import Cartao from '../components/Cartao'
-import TextView from '../components/TextView'
-import TextInputView from '../components/TextInputView'
+import React from 'react';
+import { StyleSheet, View } from 'react-native';
 
-const EditarContato = (props) => {
-    const [clicouEditar, setClicouEditar] = useState(false)
-    const [vetorEditado, setVetorEditado] = useState(props.contatos)
-    const [contato, setContato] = useState(props.contato)
+import ContatoInput from '../components/ContatoInput';
+import Cartao from '../components/Cartao';
+import Cores from '../cores/cores';
 
-    const edit = () => {
-        setClicouEditar(true)
-    }
-
-    let editar =
-        <TextView
-            nome={props.contato.item.nome}
-            telefone={props.contato.item.telefone}
-        />
-
-    if (clicouEditar == true) {
-        editar =
-            <TextInputView
-                contato={contato}
-            />
-    }
+export default function EditarContato({ route }) {
     return (
-        <View style={styles.tela}>
-            <Cartao>
-                <View style={styles.editView}>
-                    {editar}
-                </View>
-                <View styles={styles.buttonView}>
-                    <Button
-                        title="Editar"
-                        onPress={edit}
-                    />
-                    <Button
-                        title="Voltar"
-                        onPress={() => {props.onVoltar(vetorEditado)}}
-                    />
-                </View>
+        <View style={styles.telaUpdateView}>
+            <Cartao style={styles.contatoInput}>
+                <ContatoInput contatoAtual={route.params.contato} onAtualizarContato={route.params.atualizarContato} />
             </Cartao>
-
         </View>
-
-    )
+    );
 }
 
 const styles = StyleSheet.create({
-    tela: {
-        padding: 50,
+    telaUpdateView: {
+        paddingBottom: 50,
+        paddingTop: 10,
+        alignItems: 'center'
     },
-    editView: {
-        flexDirection: 'row'
-    },
-    buttonView: {
-        width: '80%'
+    contatoInput: {
+        backgroundColor: Cores.yellow
     }
-})
-
-export default EditarContato
+});

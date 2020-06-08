@@ -1,13 +1,13 @@
-import React from 'react'
-import { View, StyleSheet } from 'react-native'
+import React from 'react';
+import { StyleSheet, View } from 'react-native';
 import Cores from '../cores/cores'
 
 const Cartao = (props) => {
     return (
-        <View style = {{...styles.cartao, ...props.styles}}>
-            {props.children} 
+        <View style={{ ...styles.cartao, ...props.style }}>
+            {props.children}
         </View>
-    )
+    );
 }
 
 const styles = StyleSheet.create({
@@ -20,6 +20,6 @@ const styles = StyleSheet.create({
         elevation: 3,
         padding: 12,
     }
-})
+});
 
 export default Cartao
